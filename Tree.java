@@ -24,6 +24,14 @@ public class Tree {
 	
 	// Helper variable for search function (changes to true if a value is already present in the tree)
 	public static boolean found = false;
+	public static final int BLACK = 0;
+	public static final int RED = 1;
+	
+	private boolean isRed(Node node) {
+		if (node == null) return false;
+		return (node.getColor() == RED);
+	}
+	
 	public boolean insertNode(Node node) {
 		
 		//Here is just an example of setting colors for a node. So far, it is in green color. But you need to modify the code to dynamically adjust the color to
@@ -33,6 +41,8 @@ public class Tree {
 		// if the root exists
 		if (root == null) {
 			root = node; // let the root point to the current node
+			root.setColor(BLACK);
+			
 		} else {
 			
 			// binary search to check if value is already present, aborts insertion if so
