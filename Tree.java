@@ -21,6 +21,9 @@ public class Tree {
 	 * If the node to be inserted has the value already exist in the tree, it should not be inserted and return "false". So you need to modify the code to forbid 
 	 * nodes with repeating values to be inserted. 
 	 */
+	
+	// Helper variable for search function (changes to true if a value is already present in the tree)
+	public static boolean found = false;
 	public boolean insertNode(Node node) {
 		
 		//Here is just an example of setting colors for a node. So far, it is in green color. But you need to modify the code to dynamically adjust the color to
@@ -31,6 +34,13 @@ public class Tree {
 		if (root == null) {
 			root = node; // let the root point to the current node
 		} else {
+			
+			// binary search to check if value is already present, aborts insertion if so
+			search(root, node.getValue());
+			if(found) return false;
+			
+			
+			
 			Node current_node = root;
 			while (current_node != null) {
 				int value = current_node.getValue();
@@ -64,6 +74,23 @@ public class Tree {
 		return true;
 	}
 
+// function to search the tree and determine whether the value is already present
+	public void search(Node rootnode, int val) {
+		found = false;
+		if(rootnode.getValue()==val) {
+			found = true;
+			return;
+		}
+		// search left subtree (recursively)
+		if(rootnode.getLeft()!=null) {
+			search(rootnode.getLeft(), val);
+		}
+		// search right subtree (recursively)
+		if(rootnode.getRight()!=null) {
+			search(rootnode.getRight(), val);
+		}
+		return;
+	}
 	
 
 	
