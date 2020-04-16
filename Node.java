@@ -1,4 +1,4 @@
-package application;
+package cs350assignment4;
 
 
 import javafx.geometry.Point2D;

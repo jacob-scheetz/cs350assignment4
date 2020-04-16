@@ -1,4 +1,4 @@
-package application;
+package cs350assignment4;
 
 import java.util.LinkedList;
 import java.util.Queue;
