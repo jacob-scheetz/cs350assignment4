@@ -79,10 +79,64 @@ public class Tree {
 
 				}
 			}
+			
+			while (node.getParent().getColor()==RED) {
+				if (node.getParent()==node.getParent().getParent().getLeft()) {
+					Node temp = node.getParent().getParent().getRight();
+					if (temp.getColor()==RED) {
+						node.getParent().setColor(BLACK);
+						temp.setColor(BLACK);
+						node.getParent().getParent().setColor(RED);
+						node = node.getParent().getParent();
+					}
+					else if (node == node.getParent().getRight()) {
+						node = node.getParent();
+						rotateLeft(node);
+						node.getParent().setColor(BLACK);
+						node.getParent().getParent().setColor(RED);
+						rotateRight(node.getParent().getParent());
+					}
+					
+				}
+				
+			}
+			
+			
 		}
 
 		return true;
 	}
+	private Node rotateLeft(Node h){
+        Node x = h.getRight();
+        h.setRight(x.getLeft());
+        x.setLeft(h);
+        x.setColor(x.getLeft().getColor());
+        x.getLeft().setColor(RED);
+        return x;
+    }
+
+    private Node rotateRight(Node h){
+        Node x = h.getLeft();
+        h.setLeft(x.getRight());
+        x.setRight(h);
+        x.setColor(x.getRight().getColor());
+        x.getRight().setColor(RED);
+        return x;
+    }
+
+    private Node colorFlip(Node x){
+    	// swaps the color of node x
+        if (x.getColor() == RED) {x.setColor(BLACK);}
+        else {x.setColor(RED);}
+        
+        if (x.getLeft().getColor()==RED) {x.getLeft().setColor(BLACK);}
+        else {x.getLeft().setColor(RED);}
+        
+        if (x.getRight().getColor()==RED) {x.getRight().setColor(BLACK);}
+        else {x.getRight().setColor(RED);}
+
+        return x;
+    }
 
 // function to search the tree and determine whether the value is already present
 	public void search(Node rootnode, int val) {
@@ -94,10 +148,12 @@ public class Tree {
 		// search left subtree (recursively)
 		if(rootnode.getLeft()!=null) {
 			search(rootnode.getLeft(), val);
+			if(found) return;
 		}
 		// search right subtree (recursively)
 		if(rootnode.getRight()!=null) {
 			search(rootnode.getRight(), val);
+			if(found) return;
 		}
 		return;
 	}
